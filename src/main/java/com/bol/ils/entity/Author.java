@@ -39,12 +39,13 @@ public class Author implements Serializable{
 
     }
 
-    public Author(String firstName, String lastName, @Email(message = "Please enter a valid email") String email, String dob, String about) {
+    public Author(String firstName, String lastName, @Email(message = "Please enter a valid email") String email, String dob, String about, Set publishers) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dob = dob;
         this.about = about;
+        this.publishers = publishers;
     }
 
 
