@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="author")
+@Table(name="authors")
 public class Author implements Serializable{
 
     //define fields
@@ -26,7 +26,7 @@ public class Author implements Serializable{
     private String about;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "authors_publishers",
+    @JoinTable(name = "author_publisher",
     joinColumns = {
            @JoinColumn(name="author_id", referencedColumnName = "id", nullable = false, updatable = false)},
     inverseJoinColumns = {
@@ -34,12 +34,11 @@ public class Author implements Serializable{
 
     private Set<Publisher> publishers = new HashSet<>();
 
-    //define constructors
+    // Define constructors
     public Author(){
-
     }
 
-    public Author(String firstName, String lastName, @Email(message = "Please enter a valid email") String email, String dob, String about, Set publishers) {
+    public Author(String firstName, String lastName, @Email(message = "Please enter a valid email") String email, String dob, String about, Set<Publisher> publishers) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -47,7 +46,6 @@ public class Author implements Serializable{
         this.about = about;
         this.publishers = publishers;
     }
-
 
     // Setters and Getters
     public Long getId() {
