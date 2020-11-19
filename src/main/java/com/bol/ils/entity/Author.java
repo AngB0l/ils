@@ -1,7 +1,10 @@
 package com.bol.ils.entity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Email;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +24,7 @@ public class Author implements Serializable{
     @Email(message = "Please enter a valid email")
     private String email;
 
-    private String dob;
+    private Date dob;
 
     private String about;
 
@@ -38,8 +41,8 @@ public class Author implements Serializable{
     public Author(){
     }
 
-    public Author(String firstName, String lastName, @Email(message = "Please enter a valid email") String email, String dob, String about, Set<Publisher> publishers) {
-        this.firstName = firstName;
+    public Author(String first_name, String lastName, @Email(message = "Please enter a valid email") String email, Date dob, String about, Set<Publisher> publishers) {
+        this.firstName = first_name;
         this.lastName = lastName;
         this.email = email;
         this.dob = dob;
@@ -80,11 +83,11 @@ public class Author implements Serializable{
         this.email = email;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
