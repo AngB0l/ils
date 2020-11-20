@@ -1,7 +1,5 @@
 package com.bol.ils.entity;
-
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name="books")
