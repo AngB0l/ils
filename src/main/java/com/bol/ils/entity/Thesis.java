@@ -18,7 +18,6 @@ public class Thesis extends Publication{
     private Author author;
 
     //define constructors
-
     public Thesis() {
     }
 

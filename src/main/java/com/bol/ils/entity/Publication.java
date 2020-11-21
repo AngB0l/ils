@@ -15,7 +15,7 @@ public abstract class Publication {
     protected int pages;
     @Column
     protected int copies;
-    @Column
+    @Column(unique = true)
     protected String refCode;
     @Column
     protected String field;

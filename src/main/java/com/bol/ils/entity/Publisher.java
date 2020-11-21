@@ -19,16 +19,21 @@ public class Publisher implements Serializable {
     @ManyToMany(mappedBy = "publishers", fetch = FetchType.LAZY)
     private Set<Author> authors = new HashSet<>();
 
+    @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
+    private Set<Journal> journals = new HashSet<>();
+
     public Publisher(){
     }
 
-    public Publisher(String name, String street, String city) {
+    public Publisher(long id, String name, String street, String city, Set<Author> authors, Set<Journal> journals) {
+        this.id = id;
         this.name = name;
         this.street = street;
         this.city = city;
+        this.authors = authors;
+        this.journals = journals;
     }
 
-    // Setters and Getters
     public long getId() {
         return id;
     }
@@ -67,6 +72,14 @@ public class Publisher implements Serializable {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    public Set<Journal> getJournals() {
+        return journals;
+    }
+
+    public void setJournals(Set<Journal> journals) {
+        this.journals = journals;
     }
 
     // Override toString method
