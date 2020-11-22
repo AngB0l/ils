@@ -1,5 +1,6 @@
 package com.bol.ils.entity;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +10,9 @@ public class Book extends Publication {
     @Column
     private String ISBN;
 
-    // Define book and author relationship (many to many)
+    // Define book and author relationship (many to many) (constraint to max 5 entries)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @Size(min=1,max=5, message = "1 to 5 authors are allowed")
     @JoinTable(name = "books_authors",
     joinColumns = {
             @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false, updatable = false)},
