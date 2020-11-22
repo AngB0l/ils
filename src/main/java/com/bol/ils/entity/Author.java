@@ -37,20 +37,33 @@ public class Author implements Serializable{
 
     private Set<Publisher> publishers = new HashSet<>();
 
+//    // Define book and author relationship (many to many)
+//    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
+//    private Set<Book> books = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "books_authors",
+            joinColumns = {
+                    @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "author_id",referencedColumnName = "id", nullable = false, updatable = false)
+            })
+    private Set<Book> books = new HashSet<>();
+
     // Define constructors
     public Author(){
     }
 
-    public Author(String first_name, String lastName, @Email(message = "Please enter a valid email") String email, Date dob, String about, Set<Publisher> publishers) {
-        this.firstName = first_name;
+    public Author(Long id, String firstName, String lastName, @Email(message = "Please enter a valid email") String email, Date dob, String about, Set<Publisher> publishers, Set<Book> books) {
+        this.id = id;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dob = dob;
         this.about = about;
         this.publishers = publishers;
+        this.books = books;
     }
 
-    // Setters and Getters
     public Long getId() {
         return id;
     }
@@ -105,6 +118,14 @@ public class Author implements Serializable{
 
     public void setPublishers(Set<Publisher> publishers) {
         this.publishers = publishers;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     // Override toString method
