@@ -1,5 +1,6 @@
 package com.bol.ils.entity;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="thesis")
@@ -7,6 +8,7 @@ public class Thesis extends Publication{
     @Column
     private String supervisingProfessor;
     @Column
+    @Pattern(regexp = "Bachelor thesis|Master thesis|PhD thesis" , message = "Please select on of the valid options")
     private String type;
     @Column
     private String department;
