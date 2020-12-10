@@ -1,9 +1,14 @@
 package com.bol.ils.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+// there was an unknown property  in the JSON String while deserializing. Added @JsonIgnoreProperties to ignore.
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name="publishers")
 public class Publisher implements Serializable {
@@ -21,7 +26,9 @@ public class Publisher implements Serializable {
 
     @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
     private Set<Journal> journals = new HashSet<>();
+
     // Define book and publisher relationship (many to one)
+    @JsonBackReference
     @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
     private Set<Book> books;
 

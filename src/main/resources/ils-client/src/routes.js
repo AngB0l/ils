@@ -1,5 +1,4 @@
 import MainLayout from "./components/mainLayout";
-import AuthorsTable from "./components/authors";
 import React, { Fragment, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
@@ -22,6 +21,18 @@ const configuredRoutes = [
         path: '/publishers',
         layout: MainLayout,
         component: lazy(() => import('./components/publishers')),
+    },
+    {
+        exact: true,
+        path: '/books',
+        layout: MainLayout,
+        component: lazy(() => import('./components/books')),
+    },
+    {
+        exact: true,
+        path: '/journals',
+        layout: MainLayout,
+        component: lazy(() => import('./components/journals')),
     },
 ];
 

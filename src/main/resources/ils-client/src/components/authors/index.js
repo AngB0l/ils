@@ -22,7 +22,6 @@ const AuthorsTable = () => {
     // example of the format in the db : 1997-01-05T00:00:00.000+00:00
     const formatDate =(date) => {
         const parse = parseISO(date)
-        console.log(parse)
         const dmy = format(parse, 'dd/MM/yyyy');
         return dmy
     }

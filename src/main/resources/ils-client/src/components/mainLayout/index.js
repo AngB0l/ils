@@ -64,13 +64,13 @@ const MainLayout = (props) => {
 
                         <Dropdown item text="Pulbications">
                             <Dropdown.Menu>
-                                <Dropdown.Item as='a'>Books</Dropdown.Item>
-                                <Dropdown.Item as='a'>Journals</Dropdown.Item>
-                                <Dropdown.Item as='a'>Theses</Dropdown.Item>
+                                <Dropdown.Item as='a' href={'/books'}>Books</Dropdown.Item>
+                                <Dropdown.Item as='a' href={'/journals'}>Journals</Dropdown.Item>
+                                <Dropdown.Item as='a' href={'#'}>Theses</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Menu.Item as='a'>Authors</Menu.Item>
-                        <Menu.Item as='a'>Publishers</Menu.Item>
+                        <Menu.Item as='a' href={'/authors'}>Authors</Menu.Item>
+                        <Menu.Item as='a' href={'/publishers'}>Publishers</Menu.Item>
                     </Container>
                 </Menu>
             </Visibility>

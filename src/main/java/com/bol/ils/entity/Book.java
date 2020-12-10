@@ -1,4 +1,8 @@
 package com.bol.ils.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -22,6 +26,7 @@ public class Book extends Publication {
    private Set<Author> authors = new HashSet<>();
 
     // Define book and publisher relationship (many to one)
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
