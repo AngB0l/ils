@@ -15,7 +15,8 @@ public class Thesis extends Publication{
     @Column
     private String university;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 

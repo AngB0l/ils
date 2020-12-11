@@ -33,6 +33,11 @@ const configuredRoutes = [
         path: '/journals',
         layout: MainLayout,
         component: lazy(() => import('./components/journals')),
+    }, {
+        exact: true,
+        path: '/theses',
+        layout: MainLayout,
+        component: lazy(() => import('./components/theses')),
     },
 ];
 

@@ -66,7 +66,7 @@ const MainLayout = (props) => {
                             <Dropdown.Menu>
                                 <Dropdown.Item as='a' href={'/books'}>Books</Dropdown.Item>
                                 <Dropdown.Item as='a' href={'/journals'}>Journals</Dropdown.Item>
-                                <Dropdown.Item as='a' href={'#'}>Theses</Dropdown.Item>
+                                <Dropdown.Item as='a' href={'/theses'}>Theses</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                         <Menu.Item as='a' href={'/authors'}>Authors</Menu.Item>

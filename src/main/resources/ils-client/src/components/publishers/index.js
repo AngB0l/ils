@@ -27,7 +27,7 @@ const PublishersTable = () => {
     return (
         <div className="PublishersTable">
             <Container>
-                <Header content={"publishers"} as="h2"/>
+                <Header content={"Publishers"} as="h2"/>
                 <Table>
                     <Table.Header>
                         <Table.Row>

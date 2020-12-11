@@ -1,4 +1,5 @@
 package com.bol.ils.entity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name="authors")
 public class Author implements Serializable{
@@ -48,6 +50,10 @@ public class Author implements Serializable{
                     @JoinColumn(name = "author_id",referencedColumnName = "id", nullable = false, updatable = false)
             })
     private Set<Book> books = new HashSet<>();
+
+    // Define thesis and author relationship (one to many)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Thesis> theses;
 
     // Define constructors
     public Author(){
