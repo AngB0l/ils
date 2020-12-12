@@ -13,7 +13,6 @@ import {
     Visibility
 } from 'semantic-ui-react'
 import logo from './logo_transparent.png';
-import AuthorsTable from "../authors";
 
 const MainLayout = (props) => {
     const [menuFixed, setmenuFixed] = useState(false);

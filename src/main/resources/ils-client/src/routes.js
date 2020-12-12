@@ -33,12 +33,44 @@ const configuredRoutes = [
         path: '/journals',
         layout: MainLayout,
         component: lazy(() => import('./components/journals')),
-    }, {
+    },
+    {
         exact: true,
         path: '/theses',
         layout: MainLayout,
         component: lazy(() => import('./components/theses')),
     },
+    {
+        exact: true,
+        path: '/addauthor',
+        layout: MainLayout,
+        component: lazy(() => import('./components/authorform')),
+    },
+    {
+        exact: true,
+        path: '/addpublisher',
+        layout: MainLayout,
+        component: lazy(() => import('./components/publisherform')),
+    },
+    {
+        exact: true,
+        path: '/addbook',
+        layout: MainLayout,
+        component: lazy(() => import('./components/bookform')),
+    },
+    {
+        exact: true,
+        path: '/addjournal',
+        layout: MainLayout,
+        component: lazy(() => import('./components/journalform')),
+    },
+    {
+        exact: true,
+        path: '/addthesis',
+        layout: MainLayout,
+        component: lazy(() => import('./components/thesisform')),
+    },
+
 ];
 
 const constructRoutes = (routes) => (
