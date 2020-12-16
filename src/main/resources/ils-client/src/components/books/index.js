@@ -92,7 +92,7 @@ const BooksTable = () => {
                                 <Table.Cell> {item.copies} </Table.Cell>
                                 <Table.Cell> {item.pages} </Table.Cell>
                                 <Table.Cell>
-                                    <Button.Group icon circular>
+                                    <Button.Group icon>
                                         <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
                                         <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.book.href))}/>
                                     </Button.Group>

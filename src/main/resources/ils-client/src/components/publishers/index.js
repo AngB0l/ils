@@ -7,6 +7,7 @@ import {
     Table,
 } from 'semantic-ui-react'
 import _ from 'lodash';
+import EditModal from "../editModal";
 
 
 
@@ -62,8 +63,9 @@ const PublishersTable = () => {
                                 <Table.Cell> {item.street} </Table.Cell>
                                 <Table.Cell> {item.city} </Table.Cell>
                                 <Table.Cell>
-                                    <Button.Group icon circular>
-                                        <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
+                                    <Button.Group icon>
+                                        {/*pass the type as a prop to let the editModel know which <editform> to render*/}
+                                        <EditModal item={item} type='publisher'></EditModal>
                                         <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.publisher.href))}/>
                                     </Button.Group>
                                 </Table.Cell>

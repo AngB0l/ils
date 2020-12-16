@@ -7,6 +7,7 @@ import {
     Table,
 } from 'semantic-ui-react'
 import _ from 'lodash';
+import EditModal from "../editModal";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -91,8 +92,9 @@ const ThesesTable = () => {
                                 <Table.Cell> {item.copies} </Table.Cell>
                                 <Table.Cell> {item.pages} </Table.Cell>
                                 <Table.Cell>
-                                    <Button.Group icon circular>
-                                        <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
+                                    <Button.Group icon>
+                                        {/*pass the type as a prop to let the editModel know which <editform> to render*/}
+                                        <EditModal item={item} type='thesis'></EditModal>
                                         <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.thesis.href))}/>
                                     </Button.Group>
                                 </Table.Cell>
