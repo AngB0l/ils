@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 @CrossOrigin
-public interface ThesisRepository extends CrudRepository<Thesis,Long> {
+public interface  ThesisRepository extends CrudRepository<Thesis,Long> {
     List<Thesis> findAll();
 }

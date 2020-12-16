@@ -1,6 +1,7 @@
 import React from 'react';
-import {Formik, Field, Form} from 'formik';
+import {Formik, Field, Form, Input} from 'formik-semantic-ui';
 import axios from 'axios';
+import {Container} from 'semantic-ui-react'
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 
@@ -8,9 +9,9 @@ const ThesisForm = () => {
 
 
     return (
-        <div>
+        <Container>
             <h1>Thesis</h1>
-            <Formik
+            <Form
                 initialValues={{
                     title: '',
                     yearOfPublication: '',
@@ -25,8 +26,7 @@ const ThesisForm = () => {
                     author: '',
                 }}
                 onSubmit={async (values) => {
-                    await sleep(500);
-                    axios.post('http://localhost:8080/theses', values)
+                    await axios.post('http://localhost:8080/theses', values)
                         .then(response => {
                             alert('Success :)')
                             window.location = "/theses"
@@ -36,50 +36,45 @@ const ThesisForm = () => {
                         })
                 }}
             >
-                {({isSubmitting}) => (
-                    <Form>
-                        <label htmlFor="title">Title</label>
-                        <Field name="title"/>
+                <label htmlFor="title">Title</label>
+                <Input name="title"/>
 
-                        <label htmlFor="type">Type</label>
-                        <Field name="type"/>
+                <label htmlFor="type">Type</label>
+                <Input name="type"/>
 
-                        <label htmlFor="author">Author</label>
-                        <Field name="author"/>
+                <label htmlFor="author">Author</label>
+                <Input name="author"/>
 
-                        <label htmlFor="supervisingProfessor">Supervising Professor</label>
-                        <Field name="supervisingProfessor"/>
+                <label htmlFor="supervisingProfessor">Supervising Professor</label>
+                <Input name="supervisingProfessor"/>
 
-                        <label htmlFor="university">University</label>
-                        <Field name="university"/>
+                <label htmlFor="university">University</label>
+                <Input name="university"/>
 
-                        <label htmlFor="department">Department</label>
-                        <Field name="department"/>
+                <label htmlFor="department">Department</label>
+                <Input name="department"/>
 
-                        <label htmlFor="field">Field</label>
-                        <Field name="field"/>
+                <label htmlFor="field">Field</label>
+                <Input name="field"/>
 
-                        <label htmlFor="yearOfPublication">Year of publication</label>
-                        <Field name="yearOfPublication" placeholder="yyyy"  type="number"/>
+                <label htmlFor="yearOfPublication">Year of publication</label>
+                <Input name="yearOfPublication" placeholder="yyyy" type="number"/>
 
-                        <label htmlFor="refCode">Ref. Core</label>
-                        <Field name="refCode"/>
+                <label htmlFor="refCode">Ref. Core</label>
+                <Input name="refCode"/>
 
-                        <label htmlFor="copies">Copies</label>
-                        <Field name="copies" type="number"/>
+                <label htmlFor="copies">Copies</label>
+                <Input name="copies" type="number"/>
 
-                        <label htmlFor="type">Pages</label>
-                        <Field name="type" type="number"/>
+                <label htmlFor="pages">Pages</label>
+                <Input name="pages" type="number"/>
 
 
-
-                        <button type="submit" disabled={isSubmitting}>
-                            Submit
-                        </button>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+                <button type="submit">
+                    Submit
+                </button>
+            </Form>
+        </Container>
     );
 }
 

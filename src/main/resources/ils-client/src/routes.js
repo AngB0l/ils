@@ -70,7 +70,6 @@ const configuredRoutes = [
         layout: MainLayout,
         component: lazy(() => import('./components/thesisform')),
     },
-
 ];
 
 const constructRoutes = (routes) => (

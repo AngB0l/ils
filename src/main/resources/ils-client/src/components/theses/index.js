@@ -1,11 +1,14 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {
+    Button,
     Container,
     Header,
     Table,
 } from 'semantic-ui-react'
 import _ from 'lodash';
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 
 const ThesesTable = () => {
@@ -18,16 +21,16 @@ const ThesesTable = () => {
         return id;
     }
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchData = async () => {
             const result = await axios('http://localhost:8080/theses');
-            console.log(result)
+            // console.log(result)
             const theses = result.data._embedded.theses;
-            await Promise.all(theses.map( async(thesis) => {
+            await Promise.all(theses.map(async (thesis) => {
                 const authorResponse = await axios(thesis._links.author.href);
-                console.log(authorResponse)
-                const authorFirstName =  authorResponse.data.firstName;
-                const authorLastName =  authorResponse.data.lastName;
+                // console.log(authorResponse)
+                const authorFirstName = authorResponse.data.firstName;
+                const authorLastName = authorResponse.data.lastName;
                 const author = authorLastName + authorFirstName;
                 thesis.author = author;
 
@@ -37,10 +40,23 @@ const ThesesTable = () => {
         }
         fetchData()
     }, []);
+
+    const handleDelete = async (id) => {
+        await axios.delete(`http://localhost:8080/theses/${id}`)
+            .then(response => {
+                alert('Success :)')
+                window.location = "/theses"
+            })
+            .catch(error => {
+                alert('Something went wrong :s')
+            })
+    }
+
     return (
         <div className="ThesesTable">
             <Container>
                 <Header content={"Theses"} as="h2"/>
+                <Button circular size='mini' positive icon='add' as='a' href={'/addthesis'}/>
                 <Table>
                     <Table.Header>
                         <Table.Row>
@@ -56,6 +72,7 @@ const ThesesTable = () => {
                             <Table.HeaderCell>Ref Code</Table.HeaderCell>
                             <Table.HeaderCell>Copies</Table.HeaderCell>
                             <Table.HeaderCell>Pages</Table.HeaderCell>
+                            <Table.HeaderCell>Actions</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -73,6 +90,12 @@ const ThesesTable = () => {
                                 <Table.Cell> {item.refCode} </Table.Cell>
                                 <Table.Cell> {item.copies} </Table.Cell>
                                 <Table.Cell> {item.pages} </Table.Cell>
+                                <Table.Cell>
+                                    <Button.Group icon circular>
+                                        <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
+                                        <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.thesis.href))}/>
+                                    </Button.Group>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

@@ -1,5 +1,6 @@
 import React from 'react';
-import {Formik, Field, Form} from 'formik';
+import {Formik, Field, Form, Input} from 'formik-semantic-ui';
+import {Container} from 'semantic-ui-react'
 import axios from 'axios';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -9,9 +10,9 @@ const PublisherForm = () => {
 
 
     return (
-        <div>
+        <Container>
             <h1>Publisher</h1>
-            <Formik
+            <Form
                 initialValues={{
                     name: '',
                     street: '',
@@ -29,24 +30,20 @@ const PublisherForm = () => {
                         })
                 }}
             >
-                {({isSubmitting}) => (
-                    <Form>
                         <label htmlFor="name">Name</label>
-                        <Field name="name"/>
+                        <Input name="name"/>
 
                         <label htmlFor="city">City</label>
-                        <Field name="city"/>
+                        <Input name="city"/>
 
                         <label htmlFor="street">Street</label>
-                        <Field name="street"/>
+                        <Input name="street"/>
 
-                        <button type="submit" disabled={isSubmitting}>
+                        <button type="submit">
                             Submit
                         </button>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+            </Form>
+        </Container>
     );
 }
 

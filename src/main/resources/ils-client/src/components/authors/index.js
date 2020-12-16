@@ -1,13 +1,13 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {format, parseISO} from 'date-fns';
 import {
-    Container,
+    Button,
+    Container, Dropdown,
     Header,
     Table,
 } from 'semantic-ui-react'
 import _ from 'lodash';
-
 
 
 const AuthorsTable = () => {
@@ -31,10 +31,22 @@ const AuthorsTable = () => {
         setAuthors(result.data._embedded.authors);
     }, []);
 
+    const handleDelete = async (id) => {
+        await axios.delete(`http://localhost:8080/authors/${id}`)
+            .then(response => {
+                alert('Success :)')
+                window.location = "/authors"
+            })
+            .catch(error => {
+                alert('Something went wrong :s')
+            })
+    }
+
     return (
         <div className="AuthorsTable">
             <Container>
                 <Header content={"Authors"} as="h2"/>
+                <Button circular positive size='mini' icon='add' as='a' href={'/addauthor'}/>
                 <Table>
                     <Table.Header>
                         <Table.Row>
@@ -44,6 +56,8 @@ const AuthorsTable = () => {
                             <Table.HeaderCell>E-mail</Table.HeaderCell>
                             <Table.HeaderCell>Date of Birth</Table.HeaderCell>
                             <Table.HeaderCell>About</Table.HeaderCell>
+                            <Table.HeaderCell>Actions</Table.HeaderCell>
+
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -55,6 +69,12 @@ const AuthorsTable = () => {
                                 <Table.Cell> {item.email} </Table.Cell>
                                 <Table.Cell> {formatDate(item.dob)} </Table.Cell>
                                 <Table.Cell> {item.about} </Table.Cell>
+                                <Table.Cell>
+                                    <Button.Group icon circular>
+                                        <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
+                                        <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.author.href))}/>
+                                    </Button.Group>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

@@ -1,6 +1,8 @@
 import React from 'react';
-import {Formik, Field, Form} from 'formik';
+import {Field, Form, Input} from 'formik-semantic-ui';
 import axios from 'axios';
+import {Container} from 'semantic-ui-react'
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 
@@ -8,9 +10,9 @@ const JournalForm = () => {
 
 
     return (
-        <div>
+        <Container>
             <h1>Journal</h1>
-            <Formik
+            <Form
                 initialValues={{
                     title: '',
                     yearOfPublication: '',
@@ -28,6 +30,7 @@ const JournalForm = () => {
                     axios.post('http://localhost:8080/journals', values)
                         .then(response => {
                             alert('Success :)')
+                            // after a successful POST, show all
                             window.location = "/journals"
                         })
                         .catch(error => {
@@ -35,45 +38,42 @@ const JournalForm = () => {
                         })
                 }}
             >
-                {({isSubmitting}) => (
-                    <Form>
-                        <label htmlFor="title">Title</label>
-                        <Field name="title"/>
 
-                        <label htmlFor="issue">Issue</label>
-                        <Field name="issue" type="number"/>
+                <label htmlFor="title">Title</label>
+                <Input name="title"/>
 
-                        <label htmlFor="volume">Volume</label>
-                        <Field name="volume" type="number"/>
+                <label htmlFor="issue">Issue</label>
+                <Input name="issue" type="number"/>
 
-                        <label htmlFor="yearOfPublication">Year of Publication</label>
-                        <Field name="yearOfPublication" type="number"/>
+                <label htmlFor="volume">Volume</label>
+                <Input name="volume" type="number"/>
 
-                        <label htmlFor="field">Field</label>
-                        <Field name="field"/>
+                <label htmlFor="yearOfPublication">Year of Publication</label>
+                <Input name="yearOfPublication" type="number"/>
 
-                        <label htmlFor="refCode">Ref. Code</label>
-                        <Field name="refCode"/>
+                <label htmlFor="field">Field</label>
+                <Input name="field"/>
 
-                        <label htmlFor="isbn">ISBN</label>
-                        <Field name="isbn"/>
+                <label htmlFor="refCode">Ref. Code</label>
+                <Input name="refCode"/>
 
-                        <label htmlFor="publisher">Publisher</label>
-                        <Field name="publisher"/>
+                <label htmlFor="isbn">ISBN</label>
+                <Input name="isbn"/>
 
-                        <label htmlFor="copies">Copies</label>
-                        <Field name="copies" type="number"/>
+                <label htmlFor="publisher">Publisher</label>
+                <Input name="publisher"/>
 
-                        <label htmlFor="pages">Pages</label>
-                        <Field name="pages"  type="number"/>
+                <label htmlFor="copies">Copies</label>
+                <Input name="copies" type="number"/>
 
-                        <button type="submit" disabled={isSubmitting}>
-                            Submit
-                        </button>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+                <label htmlFor="pages">Pages</label>
+                <Input name="pages" type="number"/>
+
+                <button type="submit">
+                    Submit
+                </button>
+            </Form>
+        </Container>
     );
 }
 

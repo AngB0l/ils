@@ -1,16 +1,20 @@
 import React from 'react';
-import {Formik, Field, Form} from 'formik';
+import {Form, Input} from 'formik-semantic-ui';
 import axios from 'axios';
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+import FormikDatePicker from '../datepicker';
+import moment from 'moment'
+import {Container} from 'semantic-ui-react'
 
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const AuthorForm = () => {
 
 
     return (
-        <div>
+        <Container>
             <h1>Author</h1>
-            <Formik
+            <Form
                 initialValues={{
                     firstName: '',
                     lastName: '',
@@ -30,30 +34,39 @@ const AuthorForm = () => {
                         })
                 }}
             >
-                {({isSubmitting}) => (
-                    <Form>
-                        <label htmlFor="firstName">First Name</label>
-                        <Field name="firstName" placeholder="Jane"/>
 
-                        <label htmlFor="lastName">Last Name</label>
-                        <Field name="lastName" placeholder="Doe"/>
+                <label htmlFor="firstName">First Name</label>
+                <Input name="firstName" placeholder="Jane"/>
 
-                        <label htmlFor="email">Email</label>
-                        <Field name="email" placeholder="yourEmail@domain.com" type="email"/>
+                <label htmlFor="lastName">Last Name</label>
+                <Input name="lastName" placeholder="Doe"/>
 
-                        <label htmlFor="dob">Date of Birth</label>
-                        <Field name="dob" placeholder="dd/MM/yyyy" type="date"/>
+                <label htmlFor="email">Email</label>
+                <Input name="email" placeholder="yourEmail@domain.com" type="email"/>
 
-                        <label htmlFor="about">About</label>
-                        <Field name="about" as="textarea" placeholder="about"/>
+                <label htmlFor="dob">Date of Birth</label>
+                <FormikDatePicker
+                    name="dob"
+                    inputProps={{
+                        isOutsideRange: day => !moment(day).isSameOrBefore(moment()),
+                        renderMonthElement: props => (
+                            <FormikDatePicker.YearMonthSelector {...props} />
+                        ),
+                    }}
+                />
 
-                        <button type="submit" disabled={isSubmitting}>
-                            Submit
-                        </button>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+
+
+
+                <label htmlFor="about">About</label>
+                <Input name="about" as="textarea" placeholder="about"/>
+
+                <button type="submit" >
+                    Submit
+                </button>
+
+            </Form>
+        </Container>
     );
 }
 

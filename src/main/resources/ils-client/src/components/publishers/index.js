@@ -1,6 +1,7 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {
+    Button,
     Container,
     Header,
     Table,
@@ -28,6 +29,8 @@ const PublishersTable = () => {
         <div className="PublishersTable">
             <Container>
                 <Header content={"Publishers"} as="h2"/>
+                <Button circular size='mini' positive icon='add' as='a' href={'/addpublisher'}/>
+
                 <Table>
                     <Table.Header>
                         <Table.Row>
@@ -35,6 +38,7 @@ const PublishersTable = () => {
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Street</Table.HeaderCell>
                             <Table.HeaderCell>City</Table.HeaderCell>
+                            <Table.HeaderCell>Actions</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
