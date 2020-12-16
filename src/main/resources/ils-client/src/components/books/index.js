@@ -43,7 +43,18 @@ const BooksTable = () => {
         }
         fetchData()
     }, []);
-    console.log(books)
+
+    const handleDelete = async (id) => {
+        await axios.delete(`http://localhost:8080/books/${id}`)
+            .then(response => {
+                alert('Success :)')
+                window.location = "/books"
+            })
+            .catch(error => {
+                alert('Something went wrong :s')
+            })
+    }
+
     return (
         <div className="BooksTable">
             <Container>
@@ -64,6 +75,7 @@ const BooksTable = () => {
                             <Table.HeaderCell>Copies</Table.HeaderCell>
                             <Table.HeaderCell>Pages</Table.HeaderCell>
                             <Table.HeaderCell>Actions</Table.HeaderCell>
+
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -79,6 +91,13 @@ const BooksTable = () => {
                                 <Table.Cell> {item.publisher} </Table.Cell>
                                 <Table.Cell> {item.copies} </Table.Cell>
                                 <Table.Cell> {item.pages} </Table.Cell>
+                                <Table.Cell>
+                                    <Button.Group icon circular>
+                                        <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
+                                        <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.book.href))}/>
+                                    </Button.Group>
+                                </Table.Cell>
+
                             </Table.Row>
                         ))}
                     </Table.Body>

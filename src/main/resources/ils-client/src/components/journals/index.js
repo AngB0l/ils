@@ -19,6 +19,18 @@ const JournalsTable = () => {
         return id;
     }
 
+    const handleDelete = async (id) => {
+        await axios.delete(`http://localhost:8080/journals/${id}`)
+            .then(response => {
+                alert('Success :)')
+                window.location = "/journals"
+            })
+            .catch(error => {
+                alert('Something went wrong :s')
+            })
+    }
+
+
     useEffect( () => {
         const fetchData = async () => {
             const result = await axios('http://localhost:8080/journals');
@@ -71,6 +83,12 @@ const JournalsTable = () => {
                                 <Table.Cell> {item.publisher} </Table.Cell>
                                 <Table.Cell> {item.copies} </Table.Cell>
                                 <Table.Cell> {item.pages} </Table.Cell>
+                                <Table.Cell>
+                                    <Button.Group icon circular>
+                                        <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
+                                        <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.journal.href))}/>
+                                    </Button.Group>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

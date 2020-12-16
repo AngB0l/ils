@@ -25,6 +25,18 @@ const PublishersTable = () => {
         setPublishers(result.data._embedded.publishers);
         console.log(result.data._embedded.publishers);
     }, []);
+
+    const handleDelete = async (id) => {
+        await axios.delete(`http://localhost:8080/publishers/${id}`)
+            .then(response => {
+                alert('Success :)')
+                window.location = "/publishers"
+            })
+            .catch(error => {
+                alert('Something went wrong :s')
+            })
+    }
+
     return (
         <div className="PublishersTable">
             <Container>
@@ -39,6 +51,7 @@ const PublishersTable = () => {
                             <Table.HeaderCell>Street</Table.HeaderCell>
                             <Table.HeaderCell>City</Table.HeaderCell>
                             <Table.HeaderCell>Actions</Table.HeaderCell>
+
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -48,6 +61,13 @@ const PublishersTable = () => {
                                 <Table.Cell> {item.name} </Table.Cell>
                                 <Table.Cell> {item.street} </Table.Cell>
                                 <Table.Cell> {item.city} </Table.Cell>
+                                <Table.Cell>
+                                    <Button.Group icon circular>
+                                        <Button circular size='mini'  icon='edit' as='a' href={'#'}/>
+                                        <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.publisher.href))}/>
+                                    </Button.Group>
+                                </Table.Cell>
+
                             </Table.Row>
                         ))}
                     </Table.Body>

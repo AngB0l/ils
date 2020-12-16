@@ -30,7 +30,7 @@ const AuthorForm = () => {
                             window.location = "/authors"
                         })
                         .catch(error => {
-                            alert('Something went wrong :S')
+                            alert('Something went wrong :s')
                         })
                 }}
             >
