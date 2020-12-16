@@ -1,4 +1,4 @@
-import {Button, Container, Header} from "semantic-ui-react";
+import {Container, Header} from "semantic-ui-react";
 import React from "react";
 
 const Welcome = () => {

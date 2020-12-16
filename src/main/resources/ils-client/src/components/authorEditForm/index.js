@@ -7,8 +7,6 @@ import {Container} from 'semantic-ui-react'
 import _ from "lodash";
 
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 const AuthorEditForm = (props) => {
 
     const {item} = props;
@@ -31,9 +29,7 @@ const AuthorEditForm = (props) => {
                     about: item.about,
                 }}
                 onSubmit={async (values) => {
-                    await sleep(500);
-                    console.log(item)
-                    axios.put(`http://localhost:8080/authors/${getIdFromUrl(item._links.author.href)}`, values)
+                    await  axios.patch(`http://localhost:8080/authors/${getIdFromUrl(item._links.author.href)}`, values)
                         .then(response => {
                             alert('Success :)')
                             window.location = "/authors"

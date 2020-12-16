@@ -4,10 +4,8 @@ import axios from 'axios';
 import {Container} from 'semantic-ui-react'
 import _ from "lodash";
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-
-const ThesisEditForm = (props) => {
+const JournalEditForm = (props) => {
 
     const {item} = props;
 
@@ -19,7 +17,7 @@ const ThesisEditForm = (props) => {
 
     return (
         <Container>
-            <h1>Thesis</h1>
+            <h1>Journal</h1>
             <Form
                 initialValues={{
                     title: item.title,
@@ -28,57 +26,54 @@ const ThesisEditForm = (props) => {
                     copies: item.copies,
                     refCode: item.refCode,
                     field: item.field,
-                    supervisingProfessor: item.supervisingProfessor,
-                    type: item.type,
-                    department: item.department,
-                    university: item.university,
-                    //TODO : render the link to the author
-                    author: item.author,
+                    volume: item.volume,
+                    issue: item.issue,
+                    isbn: item.isbn,
+                    //TODO : render the link to the publisher
+                    publisher: item.publisher,
                 }}
                 onSubmit={async (values) => {
-                    await axios.patch(`http://localhost:8080/theses/${getIdFromUrl(item._links.thesis.href)}`, values)
+                    await axios.patch(`http://localhost:8080/journals/${getIdFromUrl(item._links.journal.href)}`, values)
                         .then(response => {
                             alert('Success :)')
-                            window.location = "/theses"
+                            // after a successful POST, show all
+                            window.location = "/journals"
                         })
                         .catch(error => {
-                            alert('Something went wrong :S')
+                            alert('Something went wrong :s')
                         })
                 }}
             >
+
                 <label htmlFor="title">Title</label>
                 <Input name="title"/>
 
-                <label htmlFor="type">Type</label>
-                <Input name="type"/>
+                <label htmlFor="issue">Issue</label>
+                <Input name="issue" type="number"/>
 
-                <label htmlFor="author">Author</label>
-                <Input name="author"/>
+                <label htmlFor="volume">Volume</label>
+                <Input name="volume" type="number"/>
 
-                <label htmlFor="supervisingProfessor">Supervising Professor</label>
-                <Input name="supervisingProfessor"/>
-
-                <label htmlFor="university">University</label>
-                <Input name="university"/>
-
-                <label htmlFor="department">Department</label>
-                <Input name="department"/>
+                <label htmlFor="yearOfPublication">Year of Publication</label>
+                <Input name="yearOfPublication" type="number"/>
 
                 <label htmlFor="field">Field</label>
                 <Input name="field"/>
 
-                <label htmlFor="yearOfPublication">Year of publication</label>
-                <Input name="yearOfPublication" placeholder="yyyy" type="number"/>
-
-                <label htmlFor="refCode">Ref. Core</label>
+                <label htmlFor="refCode">Ref. Code</label>
                 <Input name="refCode"/>
+
+                <label htmlFor="isbn">ISBN</label>
+                <Input name="isbn"/>
+
+                <label htmlFor="publisher">Publisher</label>
+                <Input name="publisher"/>
 
                 <label htmlFor="copies">Copies</label>
                 <Input name="copies" type="number"/>
 
                 <label htmlFor="pages">Pages</label>
                 <Input name="pages" type="number"/>
-
 
                 <button type="submit">
                     Submit
@@ -88,4 +83,4 @@ const ThesisEditForm = (props) => {
     );
 }
 
-export default ThesisEditForm;
+export default JournalEditForm;

@@ -28,7 +28,7 @@ const PublisherEditForm = (props) => {
                 }}
                 onSubmit={async (values) => {
                     await sleep(500);
-                    axios.put(`http://localhost:8080/publishers/${getIdFromUrl(item._links.publisher.href)}`, values)
+                    axios.patch(`http://localhost:8080/publishers/${getIdFromUrl(item._links.publisher.href)}`, values)
                         .then(response => {
                             alert('Success :)')
                             window.location = "/publishers"

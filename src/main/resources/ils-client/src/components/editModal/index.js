@@ -3,6 +3,8 @@ import {Button, Modal} from 'semantic-ui-react'
 import AuthorEditForm from '../authorEditForm'
 import PublisherEditForm from "../publisherEditForm";
 import ThesisEditForm from "../thesisEditForm";
+import JournalEditForm from "../journalEditForm";
+import BookEditForm from "../bookEditForm";
 
 function EditModal(props) {
     const [open, setOpen] = React.useState(false)
@@ -29,6 +31,8 @@ function EditModal(props) {
                             'author': <AuthorEditForm item={item}></AuthorEditForm>,
                             'publisher': <PublisherEditForm item={item}></PublisherEditForm>,
                             'thesis': <ThesisEditForm item={item}></ThesisEditForm>,
+                            'journal': <JournalEditForm item={item}></JournalEditForm>,
+                            'book': <BookEditForm item={item}></BookEditForm>,
 
                         }[type]
                     }
