@@ -4,8 +4,6 @@ import {Container} from 'semantic-ui-react'
 import axios from 'axios';
 import _ from "lodash";
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 
 const PublisherEditForm = (props) => {
     const {item} = props;
@@ -26,8 +24,7 @@ const PublisherEditForm = (props) => {
                     city: item.city,
                 }}
                 onSubmit={async (values) => {
-                    await sleep(500);
-                    axios.patch(`http://localhost:8080/publishers/${getIdFromUrl(item._links.publisher.href)}`, values)
+                    await axios.patch(`http://localhost:8080/publishers/${getIdFromUrl(item._links.publisher.href)}`, values)
                         .then(response => {
                             alert('Success :)')
                             window.location = "/publishers"

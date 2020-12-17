@@ -27,9 +27,16 @@ const AuthorsTable = () => {
         return dmy
     }
 
-    useEffect(async () => {
-        const result = await axios('http://localhost:8080/authors');
-        setAuthors(result.data._embedded.authors);
+    useEffect( () => {
+        const fetchData = async ()=>{
+            const result = await axios('http://localhost:8080/authors');
+            const author = result.data._embedded.authors
+
+            setAuthors(author);
+
+
+        }
+        fetchData()
     }, []);
 
     const handleDelete = async (id) => {

@@ -8,7 +8,7 @@ const configuredRoutes = [
         exact: true,
         path: '/',
         layout: MainLayout,
-        component: lazy(() => import('./components/welcome')),
+        component: lazy(() => import('./components/cardContentBlock')),
     },
     {
         exact: true,

@@ -4,7 +4,6 @@ import axios from 'axios';
 import {Container} from 'semantic-ui-react'
 
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const JournalForm = () => {
 
 
@@ -25,8 +24,7 @@ const JournalForm = () => {
                     publisher: '',
                 }}
                 onSubmit={async (values) => {
-                    await sleep(500);
-                    axios.post('http://localhost:8080/journals', values)
+                    await axios.post('http://localhost:8080/journals', values)
                         .then(response => {
                             alert('Success :)')
                             // after a successful POST, show all

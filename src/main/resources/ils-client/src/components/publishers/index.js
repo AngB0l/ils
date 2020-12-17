@@ -11,7 +11,6 @@ import EditModal from "../editModal";
 import {NavLink} from "react-router-dom";
 
 
-
 const PublishersTable = () => {
     const [publishers, setPublishers] = useState([]);
 
@@ -22,10 +21,17 @@ const PublishersTable = () => {
         return id;
     }
 
-    useEffect(async () => {
-        const result = await axios('http://localhost:8080/publishers');
-        setPublishers(result.data._embedded.publishers);
-    }, []);
+    useEffect(() => {
+            const fetchData = async () => {
+                const result = await axios('http://localhost:8080/publishers');
+                const publishers = result.data._embedded.publishers;
+                setPublishers(publishers);
+
+            }
+            fetchData()
+
+        },
+        []);
 
     const handleDelete = async (id) => {
         await axios.delete(`http://localhost:8080/publishers/${id}`)
@@ -66,7 +72,8 @@ const PublishersTable = () => {
                                     <Button.Group icon>
                                         {/*pass the type as a prop to let the editModel know which <editform> to render*/}
                                         <EditModal item={item} type='publisher'></EditModal>
-                                        <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.publisher.href))}/>
+                                        <Button circular size='mini' icon='delete'
+                                                onClick={() => handleDelete(getIdFromUrl(item._links.publisher.href))}/>
                                     </Button.Group>
                                 </Table.Cell>
 
