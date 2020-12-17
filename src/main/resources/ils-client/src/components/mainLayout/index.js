@@ -13,6 +13,7 @@ import {
     Visibility
 } from 'semantic-ui-react'
 import logo from './logo_transparent.png';
+import {NavLink} from "react-router-dom";
 
 const MainLayout = (props) => {
     const [menuFixed, setmenuFixed] = useState(false);
@@ -59,17 +60,17 @@ const MainLayout = (props) => {
                     style={menuFixed ? fixedMenuStyle : menuStyle}
                 >
                     <Container text>
-                        <Menu.Item><Image size='tiny' src={logo}/></Menu.Item>
+                        <Menu.Item><Image size='tiny' src={logo} as={NavLink} to='/'/></Menu.Item>
 
                         <Dropdown item text="Pulbications">
                             <Dropdown.Menu>
-                                <Dropdown.Item as='a' href={'/books'}>Books</Dropdown.Item>
-                                <Dropdown.Item as='a' href={'/journals'}>Journals</Dropdown.Item>
-                                <Dropdown.Item as='a' href={'/theses'}>Theses</Dropdown.Item>
+                                <Dropdown.Item as={NavLink} to='/books'>Books</Dropdown.Item>
+                                <Dropdown.Item as={NavLink} to='/journals'>Journals</Dropdown.Item>
+                                <Dropdown.Item as={NavLink} to='/theses'>Theses</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Menu.Item as='a' href={'/authors'}>Authors</Menu.Item>
-                        <Menu.Item as='a' href={'/publishers'}>Publishers</Menu.Item>
+                        <Menu.Item as={NavLink} to='/authors'>Authors</Menu.Item>
+                        <Menu.Item as={NavLink} to='/publishers'>Publishers</Menu.Item>
                     </Container>
                 </Menu>
             </Visibility>
@@ -82,6 +83,7 @@ const MainLayout = (props) => {
                     <Grid columns={4} divided stackable inverted>
                         <Grid.Row>
                             <Grid.Column>
+                                 {/*TODO implement Top-5*/}
                                 <Header inverted as='h4' content='Top 5 authors'/>
                                 <List link inverted>
                                     <List.Item as='a'>Link One</List.Item>

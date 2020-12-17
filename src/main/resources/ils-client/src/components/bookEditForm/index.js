@@ -40,8 +40,7 @@ const BookEditForm = (props) => {
                             window.location = "/books"
                         })
                         .catch(error => {
-                            console.log(values)
-                            alert('Something went wrong :S \n' + error)
+                            alert('Something went wrong :s \n' + error)
                         })
                 }}
             >

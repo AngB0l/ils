@@ -1,5 +1,5 @@
 import React from 'react';
-import {Formik, Field, Form, Input} from 'formik-semantic-ui';
+import {Form, Input} from 'formik-semantic-ui';
 import {Container} from 'semantic-ui-react'
 import axios from 'axios';
 

@@ -11,8 +11,6 @@ function EditModal(props) {
 
     const {item, type} = props
 
-
-    console.log(item)
     return (
 
         <Modal

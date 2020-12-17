@@ -8,7 +8,6 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 
 const PublisherEditForm = (props) => {
-    console.log()
     const {item} = props;
 
     const getIdFromUrl = (url) => {

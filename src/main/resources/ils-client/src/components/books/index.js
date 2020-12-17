@@ -8,6 +8,7 @@ import {
 } from 'semantic-ui-react'
 import _ from 'lodash';
 import EditModal from "../editModal";
+import {NavLink} from "react-router-dom";
 
 
 const BooksTable = () => {
@@ -60,7 +61,7 @@ const BooksTable = () => {
         <div className="BooksTable">
             <Container>
                 <Header content={"Books"} as="h2"/>
-                <Button circular size='mini' positive icon='add' as='a' href={'/addbook'}/>
+                <Button circular size='mini' positive icon='add' as={NavLink} to='/addbook'/>
 
                 <Table>
                     <Table.Header>

@@ -8,8 +8,7 @@ import {
 } from 'semantic-ui-react'
 import _ from 'lodash';
 import EditModal from "../editModal";
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+import {NavLink} from "react-router-dom";
 
 
 const ThesesTable = () => {
@@ -25,7 +24,6 @@ const ThesesTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios('http://localhost:8080/theses');
-            // console.log(result)
             const theses = result.data._embedded.theses;
             await Promise.all(theses.map(async (thesis) => {
                 const authorResponse = await axios(thesis._links.author.href);
@@ -57,7 +55,7 @@ const ThesesTable = () => {
         <div className="ThesesTable">
             <Container>
                 <Header content={"Theses"} as="h2"/>
-                <Button circular size='mini' positive icon='add' as='a' href={'/addthesis'}/>
+                <Button circular size='mini' positive icon='add' as={NavLink} to='/addthesis'/>
                 <Table>
                     <Table.Header>
                         <Table.Row>

@@ -9,6 +9,7 @@ import {
 } from 'semantic-ui-react'
 import _ from 'lodash';
 import EditModal from '../editModal'
+import {NavLink} from "react-router-dom";
 
 const AuthorsTable = () => {
     const [authors, setAuthors] = useState([]);
@@ -46,7 +47,7 @@ const AuthorsTable = () => {
         <div className="AuthorsTable">
             <Container>
                 <Header content={"Authors"} as="h2"/>
-                <Button circular positive size='mini' icon='add' as='a' href={'/addauthor'}/>
+                <Button circular positive size='mini' icon='add' as={NavLink} to='/addauthor'/>
                 <Table>
                     <Table.Header>
                         <Table.Row>

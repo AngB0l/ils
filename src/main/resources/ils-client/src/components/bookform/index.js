@@ -2,7 +2,6 @@ import React from 'react';
 import {Form, Input} from  'formik-semantic-ui';
 import axios from 'axios';
 import {Container} from 'semantic-ui-react'
-import {FieldArray} from "formik";
 
 
 const BookForm = () => {
@@ -32,7 +31,6 @@ const BookForm = () => {
                             window.location = "/books"
                         })
                         .catch(error => {
-                            console.log(values)
                             alert('Something went wrong :S \n' + error)
                         })
                 }}

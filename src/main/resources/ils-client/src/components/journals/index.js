@@ -8,6 +8,7 @@ import {
 } from 'semantic-ui-react'
 import _ from 'lodash';
 import EditModal from "../editModal";
+import {NavLink} from "react-router-dom";
 
 
 const JournalsTable = () => {
@@ -36,7 +37,6 @@ const JournalsTable = () => {
         const fetchData = async () => {
             const result = await axios('http://localhost:8080/journals');
             const journals = result.data._embedded.journals;
-            console.log(journals);
 
             await Promise.all(journals.map( async(journal) => {
                 const publisherUrl = await axios(journal._links.publisher.href);
@@ -52,7 +52,7 @@ const JournalsTable = () => {
         <div className="JournalsTable">
             <Container>
                 <Header content={"Journals"} as="h2"/>
-                <Button circular size='mini' positive icon='add' as='a' href={'/addjournal'}/>
+                <Button circular size='mini' positive icon='add' as={NavLink} to='/addjournal'/>
                 <Table>
                     <Table.Header>
                         <Table.Row>

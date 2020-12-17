@@ -8,6 +8,7 @@ import {
 } from 'semantic-ui-react'
 import _ from 'lodash';
 import EditModal from "../editModal";
+import {NavLink} from "react-router-dom";
 
 
 
@@ -24,7 +25,6 @@ const PublishersTable = () => {
     useEffect(async () => {
         const result = await axios('http://localhost:8080/publishers');
         setPublishers(result.data._embedded.publishers);
-        console.log(result.data._embedded.publishers);
     }, []);
 
     const handleDelete = async (id) => {
@@ -42,7 +42,7 @@ const PublishersTable = () => {
         <div className="PublishersTable">
             <Container>
                 <Header content={"Publishers"} as="h2"/>
-                <Button circular size='mini' positive icon='add' as='a' href={'/addpublisher'}/>
+                <Button circular size='mini' positive icon='add' as={NavLink} to='/addpublisher'/>
 
                 <Table>
                     <Table.Header>

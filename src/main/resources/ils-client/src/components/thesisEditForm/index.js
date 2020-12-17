@@ -4,8 +4,6 @@ import axios from 'axios';
 import {Container} from 'semantic-ui-react'
 import _ from "lodash";
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 
 const ThesisEditForm = (props) => {
 

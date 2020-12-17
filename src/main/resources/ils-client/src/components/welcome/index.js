@@ -1,13 +1,16 @@
-import {Container, Header} from "semantic-ui-react";
+import {Container, Header, Menu} from "semantic-ui-react";
 import React from "react";
+import {NavLink} from "react-router-dom";
 
 const Welcome = () => {
     return (
         <div className="Welcome">
             <Container>
-                <Header content="Welcome! This is my first application using Spring Boot framework and React JS" as="h2"/>
-                <h3>You can start by adding a <a href={'/addauthor'}>new Author</a>
-                    or a <a href={'/addpublisher'}>new Publisher</a></h3>
+                <p>
+                    <Header content="Welcome to ILS application using Spring Boot framework and React JS" as="h2"/>
+                    <h3>You can start by adding a <NavLink to='/addauthor'>new Author</NavLink>
+                        or a <NavLink to='/addpublisher'>new Publisher</NavLink></h3>
+                </p>
             </Container>
         </div>
     );
