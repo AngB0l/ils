@@ -38,7 +38,7 @@ const ThesisForm = () => {
                 <label htmlFor="title">Title</label>
                 <Input name="title"/>
 
-                <label htmlFor="type">Type</label>
+                <label htmlFor="type">Type [Bachelor thesis|Master thesis|PhD thesis]</label>
                 <Input name="type"/>
 
                 <label htmlFor="author">Author</label>
