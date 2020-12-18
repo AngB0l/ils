@@ -6,10 +6,7 @@ import moment from 'moment'
 import {Container} from 'semantic-ui-react'
 
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 const AuthorForm = () => {
-
 
     return (
         <Container>
@@ -23,8 +20,7 @@ const AuthorForm = () => {
                     about: '',
                 }}
                 onSubmit={async (values) => {
-                    await sleep(500);
-                    axios.post('http://localhost:8080/authors', values)
+                  await axios.post('http://localhost:8080/authors', values)
                         .then(response => {
                             alert('Success :)')
                             window.location = "/authors"

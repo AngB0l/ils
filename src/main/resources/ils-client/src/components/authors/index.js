@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {format, parseISO} from 'date-fns';
+import {format, parseISO, formatISO} from 'date-fns';
 import {
     Button,
     Container,
-    Header, Input, Search,
-    Table,
+    Header, Input,
+    Table, Dropdown
 } from 'semantic-ui-react'
 import _ from 'lodash';
 import EditModal from '../editModal'
 import {NavLink} from "react-router-dom";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Reducer(state, action) {
     switch (action.type) {
@@ -36,13 +37,18 @@ function Reducer(state, action) {
                 }
             }
             return {
+                ...state,
                 column: action.column,
                 data: _.sortBy(state.data, [action.column]),
                 direction: 'ascending',
             }
-        // search cases
+        // search case
         case 'UPDATE_SELECTION':
-            return {...state, data: action.authors.filter((author) => {return author['firstName'].indexOf(action.query)>-1})}
+            return {
+                ...state, data: action.authors.filter((author) => {
+                    return author[action.searchByfield].indexOf(action.query) > -1
+                })
+            }
 
         default:
             throw new Error()
@@ -51,6 +57,8 @@ function Reducer(state, action) {
 
 const AuthorsTable = () => {
     const [allAuthors, setAuthors] = useState([]);
+    const [searchByfield, setSearchByfield] = useState('firstName');
+    const [startDate, setStartDate] = useState(new Date());
 
     const getIdFromUrl = (url) => {
         const ar = url.split('/');
@@ -70,21 +78,21 @@ const AuthorsTable = () => {
         data: [],
         direction: null,
     })
-    const handleSearchChange = (data) => {
-        dispatch({ type: 'UPDATE_SELECTION', query: data.target.value, authors: allAuthors })
+
+    const handleSearchChange = (e) => {
+        dispatch({type: 'UPDATE_SELECTION', query: e.target.value, authors: allAuthors, searchByfield: searchByfield})
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios('http://localhost:8080/authors');
-            const authorsData = result.data._embedded.authors
+    const handleSearchDateChange = (e) => {
+        dispatch({type: 'UPDATE_SELECTION', query: format(e, 'yyyy-MM-dd'), authors: allAuthors, searchByfield: searchByfield})
+        console.log(formatISO(e))
+        setStartDate(e)
+    }
 
-            dispatch({type: 'FETCH', column: 'id', data: authorsData})
-            setAuthors(authorsData)
-        }
-        fetchData()
-
-    }, []);
+    const handleFilterFieldChange = (event, {value}) => {
+        setSearchByfield(value);
+        dispatch({type: 'UPDATE_SELECTION', query: '', authors: allAuthors, searchByfield: searchByfield})
+    }
 
     const handleDelete = async (id) => {
         await axios.delete(`http://localhost:8080/authors/${id}`)
@@ -97,15 +105,38 @@ const AuthorsTable = () => {
             })
     }
 
+    const dropdownOptions = [{key: 'fistName', text: 'First Name', value: 'firstName'},
+        {key: 'lastName', text: 'Last Name', value: 'lastName'},
+        {key: 'email', text: 'Email', value: 'email'},
+        {key: 'dob', text: 'Date of Birth', value: 'dob'},
+        {key: 'about', text: 'About', value: 'about'},]
 
     const {column, data, direction} = state
-    console.log(data)
+
+    useEffect(() => {
+        const fetchData = async () => {
+
+            const result = await axios('http://localhost:8080/authors');
+
+            const authorsData = result.data._embedded.authors
+
+            dispatch({type: 'FETCH', column: 'id', data: authorsData})
+
+            setAuthors(authorsData)
+        }
+        fetchData()
+
+    }, []);
+
     return (
         <div className="AuthorsTable">
             <Container>
                 <Header content={"Authors"} as="h2"/>
                 <Button circular positive size='mini' icon='add' as={NavLink} to='/addauthor'/>
-                <Input icon='search' onChange={handleSearchChange} />
+                {searchByfield === 'dob' ? <DatePicker  dateFormat='dd-MM-yyyy' selected={startDate} onChange={handleSearchDateChange} />
+                    : <Input icon='search' onChange={handleSearchChange}/>}
+
+                <Dropdown value={searchByfield} selection options={dropdownOptions} onChange={handleFilterFieldChange}/>
                 <Table sortable celled fixed>
                     <Table.Header>
                         <Table.Row>
