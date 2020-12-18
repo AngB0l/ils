@@ -11,8 +11,44 @@ import _ from 'lodash';
 import EditModal from '../editModal'
 import {NavLink} from "react-router-dom";
 
+
+function Reducer(state, action) {
+    console.log(action)
+    switch (action.type) {
+        case 'FETCH':
+            return {
+                ...state,
+                column: action.column,
+                data: action.data,
+                direction: 'ascending',
+            }
+        case 'CHANGE_SORT':
+
+            if (state.column === action.column) {
+
+                return {
+                    ...state,
+                    column: action.column,
+                    //use clone because the reducer should change state without mutating the current state
+                    data: _.clone(state.data).reverse(),
+                    direction:
+                        state.direction === 'ascending' ? 'descending' : 'ascending',
+                }
+
+            }
+
+            return {
+                column: action.column,
+                data: _.sortBy(state.data, [action.column]),
+                direction: 'ascending',
+            }
+        default:
+            throw new Error()
+    }
+}
+
 const AuthorsTable = () => {
-    const [authors, setAuthors] = useState([]);
+    const [authors,setAuthors] = useState([]);
 
     const getIdFromUrl = (url) => {
         const ar = url.split('/');
@@ -21,22 +57,28 @@ const AuthorsTable = () => {
         return id;
     }
     // example of the format in the db : 1997-01-05T00:00:00.000+00:00
-    const formatDate =(date) => {
+    const formatDate = (date) => {
         const parse = parseISO(date)
         const dmy = format(parse, 'dd/MM/yyyy');
         return dmy
     }
 
-    useEffect( () => {
-        const fetchData = async ()=>{
+    const [state, dispatch] = React.useReducer(Reducer, {
+        column: null,
+        data: [],
+        direction: null,
+    })
+
+    useEffect(() => {
+        const fetchData = async () => {
             const result = await axios('http://localhost:8080/authors');
-            const author = result.data._embedded.authors
+            const authorsData = result.data._embedded.authors
 
-            setAuthors(author);
-
-
+            dispatch({type: 'FETCH', column: 'id',data:authorsData})
+            setAuthors(authorsData)
         }
         fetchData()
+
     }, []);
 
     const handleDelete = async (id) => {
@@ -50,26 +92,47 @@ const AuthorsTable = () => {
             })
     }
 
+
+
+    const {column, data, direction} = state
+console.log(data)
     return (
         <div className="AuthorsTable">
             <Container>
                 <Header content={"Authors"} as="h2"/>
                 <Button circular positive size='mini' icon='add' as={NavLink} to='/addauthor'/>
-                <Table>
+                <Table sortable celled fixed>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Id</Table.HeaderCell>
-                            <Table.HeaderCell>First Name</Table.HeaderCell>
-                            <Table.HeaderCell>Last Name</Table.HeaderCell>
-                            <Table.HeaderCell>E-mail</Table.HeaderCell>
-                            <Table.HeaderCell>Date of Birth</Table.HeaderCell>
-                            <Table.HeaderCell>About</Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === 'id' ? direction : null}
+                                onClick={() => dispatch({type: 'CHANGE_SORT', column: 'id'})}
+                            >Id</Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === 'firstName' ? direction : null}
+                                onClick={() => dispatch({type: 'CHANGE_SORT', column: 'firstName'})}
+                            >First Name</Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === 'lastName' ? direction : null}
+                                onClick={() => dispatch({type: 'CHANGE_SORT', column: 'lastName'})}
+                            >Last Name</Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === 'email' ? direction : null}
+                                onClick={() => dispatch({type: 'CHANGE_SORT', column: 'email'})}
+                            >E-mail</Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === 'dob' ? direction : null}
+                                onClick={() => dispatch({type: 'CHANGE_SORT', column: 'dob'})}
+                            >Date of Birth</Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === 'about' ? direction : null}
+                                onClick={() => dispatch({type: 'CHANGE_SORT', column: 'about'})}
+                            >About</Table.HeaderCell>
                             <Table.HeaderCell>Actions</Table.HeaderCell>
-
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {authors.map(item => (
+                        {data.map(item => (
                             <Table.Row key={getIdFromUrl(item._links.author.href)}>
                                 <Table.Cell> {getIdFromUrl(item._links.author.href)}</Table.Cell>
                                 <Table.Cell> {item.firstName} </Table.Cell>
@@ -81,7 +144,8 @@ const AuthorsTable = () => {
                                     <Button.Group icon>
                                         {/*pass the type as a prop to let the editModel know which <editform> to render*/}
                                         <EditModal item={item} type='author'></EditModal>
-                                        <Button circular size='mini' icon='delete' onClick={()=> handleDelete(getIdFromUrl(item._links.author.href))}/>
+                                        <Button circular size='mini' icon='delete'
+                                                onClick={() => handleDelete(getIdFromUrl(item._links.author.href))}/>
                                     </Button.Group>
                                 </Table.Cell>
                             </Table.Row>
