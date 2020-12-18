@@ -4,7 +4,7 @@ import {format, parseISO} from 'date-fns';
 import {
     Button,
     Container,
-    Header,
+    Header, Input, Search,
     Table,
 } from 'semantic-ui-react'
 import _ from 'lodash';
@@ -13,8 +13,8 @@ import {NavLink} from "react-router-dom";
 
 
 function Reducer(state, action) {
-    console.log(action)
     switch (action.type) {
+
         case 'FETCH':
             return {
                 ...state,
@@ -22,8 +22,8 @@ function Reducer(state, action) {
                 data: action.data,
                 direction: 'ascending',
             }
-        case 'CHANGE_SORT':
 
+        case 'CHANGE_SORT':
             if (state.column === action.column) {
 
                 return {
@@ -34,21 +34,23 @@ function Reducer(state, action) {
                     direction:
                         state.direction === 'ascending' ? 'descending' : 'ascending',
                 }
-
             }
-
             return {
                 column: action.column,
                 data: _.sortBy(state.data, [action.column]),
                 direction: 'ascending',
             }
+        // search cases
+        case 'UPDATE_SELECTION':
+            return {...state, data: action.authors.filter((author) => {return author['firstName'].indexOf(action.query)>-1})}
+
         default:
             throw new Error()
     }
 }
 
 const AuthorsTable = () => {
-    const [authors,setAuthors] = useState([]);
+    const [allAuthors, setAuthors] = useState([]);
 
     const getIdFromUrl = (url) => {
         const ar = url.split('/');
@@ -68,13 +70,16 @@ const AuthorsTable = () => {
         data: [],
         direction: null,
     })
+    const handleSearchChange = (data) => {
+        dispatch({ type: 'UPDATE_SELECTION', query: data.target.value, authors: allAuthors })
+    }
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios('http://localhost:8080/authors');
             const authorsData = result.data._embedded.authors
 
-            dispatch({type: 'FETCH', column: 'id',data:authorsData})
+            dispatch({type: 'FETCH', column: 'id', data: authorsData})
             setAuthors(authorsData)
         }
         fetchData()
@@ -93,14 +98,14 @@ const AuthorsTable = () => {
     }
 
 
-
     const {column, data, direction} = state
-console.log(data)
+    console.log(data)
     return (
         <div className="AuthorsTable">
             <Container>
                 <Header content={"Authors"} as="h2"/>
                 <Button circular positive size='mini' icon='add' as={NavLink} to='/addauthor'/>
+                <Input icon='search' onChange={handleSearchChange} />
                 <Table sortable celled fixed>
                     <Table.Header>
                         <Table.Row>
